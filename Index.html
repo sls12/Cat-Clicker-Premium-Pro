@@ -14,8 +14,20 @@
     </div>
     <br>
     <div id="admin">
-      <button id="chgdetail">Admin</button>
+      <button id="chgdetail">Admin</button><br>
+      <form id="details">
+        <label> Name  :  </label><input id="name_lab"></name><br>
+        <label> Picture: </label><input id="pic_lab"></name><br>
+        <label> Clicks  :  </label><input id="click_lab"></name><br>
+        <button id="savedetail">Save</button>
+      </form>
+
     </div>
     <script src="js/app.js"></script>
+    <script>
+      if(!document.getElementById('chgdetail').active){
+        document.getElementById('details').style.display ='none';
+      }
+    </script>
     </body>
 </html>

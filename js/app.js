@@ -29,8 +29,7 @@ var catView={
     this.catNameElem = document.getElementById('name');
     this.catImageElem = document.getElementById('cat-img');
     this.countElem = document.getElementById('cnt');
-    this.adminElem = document.getElementById('admin');
-    this.buttonElem = document.getElementById('chgdetail');
+
 
     this.catImageElem.addEventListener('click',function(e){
       octopus.incrementCounter();
@@ -40,31 +39,59 @@ var catView={
   },
 
   render:function(){
-    var name_lab, chg_name,t;
+
     var currentCat=octopus.getCurrentCat();
     this.countElem.textContent = currentCat.clickCount;
     this.catImageElem.src = currentCat.imgSrc;
     this.catNameElem.textContent = currentCat.name;
 
 
-    // Admin Section
-    this.buttonElem.addEventListener('click',(function(cat){
-      return function(){
-        octopus.setCurrentCat(cat);
-        name_lab = document.createElement('label');
-        t = document.createTextNode("Name");
-        //name_lab.setAttribute("for", "chgdetail");
-        name_lab.appendChild(t);
-        //name_lab.textContent = "Name";
-        chg_name = document.createElement('input');
-        chg_name.value= cat.name;
-      };
-
-      this.adminElem.insertBefore(name_lab,"chgdetail");
-      this.adminElem.appendChild(chg_name);
-    })(cat));
   }
 };
+
+  // Admin View
+  var adminView ={
+    init:function(){
+      this.adminElem = document.getElementById('admin');
+      this.buttonElem = document.getElementById('chgdetail');
+      this.formElem = document.getElementById('details');
+      this.nameElem = document.getElementById('name_lab');
+      this.picElem = document.getElementById('pic_lab');
+      this.clickElem = document.getElementById('click_lab');
+    //  console.log(this.nameElem);
+
+      this.render();
+    },
+
+    render:function(){
+    //      var name_lab, chg_name,t;
+          var currentCat=octopus.getCurrentCat();
+    //      this.nameElem.setAttribute('value',currentCat.name);
+    //      console.log(currentCat);
+          var nameElem = this.nameElem;
+          var picElem  = this.picElem;
+          var clickElem=this.clickElem;
+    //      console.log(hi);
+          this.buttonElem.addEventListener('click',(function(currentCat){
+            return function(){
+              var currentCat=octopus.getCurrentCat();
+              document.getElementById('details').style.display ='block';
+              //octopus.setCurrentCat(cat);
+              //name_lab = document.createElement('input');
+              //t = document.createTextNode("Name");
+              //name_lab.setAttribute("for", "chgdetail");
+              //name_lab.appendChild(t);
+              //name_lab.textContent = "Name";
+              //chg_name = document.createElement('input');
+              //console.log(currentCat);
+              nameElem.setAttribute('value',currentCat.name);
+              picElem.value = currentCat.imgSrc;
+              clickElem.value= currentCat.clickCount;
+              adminView.render();
+            };
+          })(currentCat));
+    }
+  };
 
 var catListView ={
     init:function(){
@@ -101,6 +128,7 @@ var octopus={
     //initialise views
     catListView.init();
     catView.init();
+    adminView.init();
   },
 
   getCurrentCat:function(){
